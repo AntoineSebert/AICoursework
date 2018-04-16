@@ -20,13 +20,39 @@ public class Solution {
 
 	public static void main(String[] args) {
 		//promptValues();
-		State test = new State(4), test2 = new State(2, 2, Bank.SOUTH);
+		State test = new State(
+			new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+			}}
+		);
+		State test2 = new State(
+			new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+			}},
+			new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+			}},
+			Bank.SOUTH
+		);
 		System.out.println(test.toString());
 		System.out.println(test2.toString());
 		System.out.println(test.equals(test2));
 		System.out.println(test2.equals(test));
-		test2 = new State(-2, 2, Bank.SOUTH);
-		System.out.println(test2.isInvalid());
+		test2 = new State(
+				new ArrayList<Integer>() {{
+					add(100);
+					add(-80);
+				}},
+				new ArrayList<Integer>() {{
+					add(100);
+					add(80);
+				}},
+				Bank.SOUTH
+			);
+		System.out.println(test2.isValid());
 	}
 
 	private static void promptValues() {

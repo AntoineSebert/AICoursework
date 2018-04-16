@@ -13,9 +13,10 @@ public class State implements search.State {
 		// constructor
 			public State(ArrayList<Integer> people) {
 				northPeople = people;
+				southPeople = new ArrayList<Integer>();
 				raftLocation = Bank.NORTH;
 			}
-			public State(ArrayList<Integer> np,ArrayList<Integer> sp, Bank location) {
+			public State(ArrayList<Integer> np, ArrayList<Integer> sp, Bank location) {
 				for(int element : np)
 					assert(0 < element);
 				for(int element : sp)
@@ -35,19 +36,19 @@ public class State implements search.State {
 				return result;
 			}
 			public boolean equals(State state) {
+				if(northPeople.size() != state.getNorthPeople().size() || southPeople.size() != state.getSouthPeople().size())
+					return false;
 				Collections.sort(northPeople);
 				Collections.sort(state.getNorthPeople());
 				Collections.sort(southPeople);
 				Collections.sort(state.getSouthPeople());
 
-				for(int element : northPeople)
-					for(int element2 : state.getNorthPeople())
-						if(element != element2)
-							return false;
-				for(int element : southPeople)
-					for(int element2 : state.getSouthPeople())
-						if(element != element2)
-							return false;
+				for(int i = 0; i < northPeople.size(); i++)
+					if(northPeople.get(i) != state.getNorthPeople().get(i))
+						return false;
+				for(int i = 0; i < southPeople.size(); i++)
+					if(southPeople.get(i) != state.getSouthPeople().get(i))
+						return false;
 				return true;
 			}
 		// getters
@@ -61,6 +62,15 @@ public class State implements search.State {
 				return sum;
 			}
 		// accessors
+			public boolean isValid() {
+				for(int element : northPeople)
+					if(element < 0)
+						return false;
+				for(int element : southPeople)
+					if(element < 0)
+						return false;
+				return true;
+			}
 			public List<ActionStatePair> successor() {
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				ArrayList<Integer> PeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
@@ -71,8 +81,10 @@ public class State implements search.State {
 						// You need at least 1 person on the raft, and not more than raft size. If M is within the acceptable range, create an action.
 						if(0 < m && m <= Solution.RAFT_SIZE && getRaftWeight() < Solution.RAFT_MAX_WEIGHT) {
 							/*
-							Action action = new Action(m, oppositeBank(this.raftLocation));
-							result.add(new ActionStatePair(action, applyAction(action)));
+							Action action = new Action(m, oppositeBank(raftLocation));
+							State newState = applyAction(action);
+							if(newState.isValid())
+								result.add(new ActionStatePair(action, newState));
 							*/
 						}
 				return result;
