@@ -1,5 +1,6 @@
 package solution;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import search.*;
@@ -10,8 +11,13 @@ public class Solution {
 	static public int RAFT_SIZE = 2;
 	static public int RAFT_MAX_WEIGHT = 180;
 	static public int NUM_PEOPLE = 4;
-	static public int PEOPLE[] = { /* Adam (100.0) Betty (90.0) Claire (50.0) Dave (30.0) */ };
-	
+	static public ArrayList<Integer> PEOPLE = new ArrayList<Integer>() {{
+		add(100);
+		add(90);
+		add(50);
+		add(30);
+	}};
+
 	public static void main(String[] args) {
 		//promptValues();
 		State test = new State(4), test2 = new State(2, 2, Bank.SOUTH);
@@ -22,7 +28,7 @@ public class Solution {
 		test2 = new State(-2, 2, Bank.SOUTH);
 		System.out.println(test2.isInvalid());
 	}
-	
+
 	private static void promptValues() {
 		Scanner scan = new Scanner(System.in);
 
@@ -34,10 +40,9 @@ public class Solution {
 
 		System.out.println("NUM_PEOPLE");
 		NUM_PEOPLE = scan.nextInt();
-		/*
+		PEOPLE.clear();
 		for(int i = 0; i < NUM_PEOPLE; i++)
-			PEOPLE[i] = new Person(scan.nextInt());
-		*/
+			PEOPLE.add(scan.nextInt());
 
 		scan.close();
 	}

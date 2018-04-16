@@ -8,7 +8,6 @@ public class State implements search.State {
 	/* ATTRIBUTES */
 		private int northPeople, southPeople;
 		private Bank raftLocation;
-		//private Person[] raft;
 	/* MEMBERS */
 		// constructor
 			public State(int people) {
@@ -42,7 +41,7 @@ public class State implements search.State {
 		// accessors
 			public boolean isInvalid() { return northPeople < 0 || southPeople < 0; }
 			public List<ActionStatePair> successor() {
-				List<ActionStatePair> result = new ArrayList<ActionStatePair>();	// I chose to use an ArrayList object as the list will be short
+				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				if(this.isInvalid())
 					return result;
 				int numPeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
@@ -50,7 +49,7 @@ public class State implements search.State {
 				// The main loops going through all combinations of M. Note that we start from the max value of M down to 0.
 				// This makes us generate actions that prefer moving more M than fewer.
 				for(int m = Math.min(numPeopleOnBank, Solution.RAFT_SIZE); m >= 0; m--)
-						// You need at least 1 person on the raft, and not more than raft size.  If M is within the acceptable range, create an action.
+						// You need at least 1 person on the raft, and not more than raft size. If M is within the acceptable range, create an action.
 						if(m <= Solution.RAFT_SIZE && m > 0) {
 							/*
 							Action action = new Action(m, oppositeBank(this.raftLocation));
