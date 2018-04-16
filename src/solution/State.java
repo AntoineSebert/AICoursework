@@ -8,9 +8,15 @@ public class State implements search.State {
 	/* ATTRIBUTES */
 		private int northPeople, southPeople;
 		private Bank raftLocation;
+		//private Person[] raft;
 	/* MEMBERS */
 		// constructor
+			public State(int people) {
+				northPeople = people;
+				raftLocation = Bank.NORTH;
+			}
 			public State(int np, int sp, Bank location) {
+				assert(0 < northPeople && 0 < southPeople);
 				northPeople = np;
 				southPeople = sp;
 				raftLocation = location;
@@ -20,7 +26,7 @@ public class State implements search.State {
 				String result = "North: " + northPeople;
 				if(raftLocation == Bank.NORTH)
 					result += " Raft";
-				result += "\nSouth: " + southPeople;
+				result += "\tSouth: " + southPeople;
 				if(raftLocation == Bank.SOUTH)
 					result += " Raft";
 				return result;
@@ -36,31 +42,33 @@ public class State implements search.State {
 		// accessors
 			public boolean isInvalid() { return northPeople < 0 || southPeople < 0; }
 			public List<ActionStatePair> successor() {
-				List<ActionStatePair> result = new ArrayList<ActionStatePair>();	// I chose to use an ArrayList object as the list will be short.
-
-				if(this.isInvalid())	// if current state is invalid
-					return result;	// return an empty set
+				List<ActionStatePair> result = new ArrayList<ActionStatePair>();	// I chose to use an ArrayList object as the list will be short
+				if(this.isInvalid())
+					return result;
 				int numPeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
 				
 				// The main loops going through all combinations of M. Note that we start from the max value of M down to 0.
 				// This makes us generate actions that prefer moving more M than fewer.
-				for(int m = Math.min(numPeopleOnBank, MissionariesCannibals.RAFT_SIZE); m >= 0; m--)
-						// You need at least 1 person on the raft, and not more than raft size.
-						// If M is within the acceptable range, create an action.
-						if(m <= MissionariesCannibals.RAFT_SIZE && m > 0) {
+				for(int m = Math.min(numPeopleOnBank, Solution.RAFT_SIZE); m >= 0; m--)
+						// You need at least 1 person on the raft, and not more than raft size.  If M is within the acceptable range, create an action.
+						if(m <= Solution.RAFT_SIZE && m > 0) {
+							/*
 							Action action = new Action(m, oppositeBank(this.raftLocation));
 							State nextState = this.applyAction(action);
 							if(!nextState.isInvalid())
 								result.add(new ActionStatePair(action, nextState));
+							*/
 						}
 				return result;
 			}
 		// modifiers
 			private Bank oppositeBank(Bank current) { return (current == Bank.NORTH ? Bank.SOUTH : Bank.NORTH); }
 	// modifier ? change the return to "this = "
+	/*
 	public State applyAction(Action action) {
 		if(action.toBank == Bank.NORTH)
 			return new State(northPeople + action.missionaries, southPeople - action.missionaries, Bank.NORTH);
 		return new State(northPeople - action.missionaries, southPeople + action.missionaries, Bank.SOUTH);
 	}
+	*/
 }

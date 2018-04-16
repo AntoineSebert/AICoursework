@@ -13,7 +13,14 @@ public class Solution {
 	static public int PEOPLE[] = { /* Adam (100.0) Betty (90.0) Claire (50.0) Dave (30.0) */ };
 	
 	public static void main(String[] args) {
-		promptValues();
+		//promptValues();
+		State test = new State(4), test2 = new State(2, 2, Bank.SOUTH);
+		System.out.println(test.toString());
+		System.out.println(test2.toString());
+		System.out.println(test.equals(test2));
+		System.out.println(test2.equals(test));
+		test2 = new State(-2, 2, Bank.SOUTH);
+		System.out.println(test2.isInvalid());
 	}
 	
 	private static void promptValues() {
@@ -27,8 +34,10 @@ public class Solution {
 
 		System.out.println("NUM_PEOPLE");
 		NUM_PEOPLE = scan.nextInt();
+		/*
 		for(int i = 0; i < NUM_PEOPLE; i++)
 			PEOPLE[i] = new Person(scan.nextInt());
+		*/
 
 		scan.close();
 	}
