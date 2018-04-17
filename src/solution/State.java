@@ -9,7 +9,7 @@ import org.apache.commons.math3.util.*; // mention this in report
 
 public class State implements search.State {
 	/* ATTRIBUTES */
-		private ArrayList<Integer> northPeople, southPeople, raft;
+		private ArrayList<Integer> northPeople, southPeople;
 		private Bank raftLocation;
 	/* MEMBERS */
 		// constructor
@@ -18,7 +18,6 @@ public class State implements search.State {
 				northPeople = (ArrayList<Integer>)people.clone();
 				southPeople = new ArrayList<Integer>();
 				raftLocation = Bank.NORTH;
-				raft = new ArrayList<Integer>();
 			}
 			@SuppressWarnings("unchecked")
 			public State(ArrayList<Integer> np, ArrayList<Integer> sp, Bank location) {
@@ -29,7 +28,6 @@ public class State implements search.State {
 				northPeople = (ArrayList<Integer>)np.clone();
 				southPeople = (ArrayList<Integer>)sp.clone();
 				raftLocation = location;
-				raft = new ArrayList<Integer>();
 			}
 		// operators
 			public String toString() {
@@ -61,7 +59,6 @@ public class State implements search.State {
 			public ArrayList<Integer> getNorthPeople() { return northPeople; }
 			public ArrayList<Integer> getSouthPeople() { return southPeople; }
 			public Bank getLocation() { return raftLocation; }
-			public int getRaftWeight() { return Solution.sum(raft); }
 		// accessors
 			public boolean isValid() {
 				for(int element : northPeople)
@@ -70,7 +67,7 @@ public class State implements search.State {
 				for(int element : southPeople)
 					if(element < 0)
 						return false;
-				return raft.size() <= Solution.RAFT_SIZE && getRaftWeight() <= Solution.RAFT_MAX_WEIGHT;
+				return true;
 			}
 			public List<ActionStatePair> successor() {
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
@@ -120,6 +117,11 @@ public class State implements search.State {
 					newSouthPeople.addAll(action.getPeople());
 				}
 				return new State(newNorthPeople, newSouthPeople, action.getBank());
+			}
+			public int hashCode() {
+				int hashcode = (raftLocation == Bank.NORTH ? 0 : 1);
+				hashcode += Solution.sum(northPeople) + (Solution.sum(southPeople) * 1000);
+				return hashcode;
 			}
 		// other
 			private Bank oppositeBank(Bank current) { return (current == Bank.NORTH ? Bank.SOUTH : Bank.NORTH); }
