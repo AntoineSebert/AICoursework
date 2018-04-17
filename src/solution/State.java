@@ -89,14 +89,18 @@ public class State implements search.State {
 						}
 				return result;
 			}
+			public State applyAction(Action action) {
+				ArrayList<Integer> newNorthPeople = (ArrayList<Integer>)northPeople.clone(), newSouthPeople = (ArrayList<Integer>)southPeople.clone();
+				if(action.getBank() == Bank.NORTH) {
+					newNorthPeople.addAll(action.getPeople());
+					newSouthPeople.removeAll(action.getPeople());
+				}
+				else {
+					newNorthPeople.removeAll(action.getPeople());
+					newSouthPeople.addAll(action.getPeople());
+				}
+				return new State(newNorthPeople, newSouthPeople, Bank.SOUTH);
+			}
 		// modifiers
 			private Bank oppositeBank(Bank current) { return (current == Bank.NORTH ? Bank.SOUTH : Bank.NORTH); }
-	// modifier ? change the return to "this = "
-	/*
-	public State applyAction(Action action) {
-		if(action.toBank == Bank.NORTH)
-			return new State(northPeople + action.missionaries, southPeople - action.missionaries, Bank.NORTH);
-		return new State(northPeople - action.missionaries, southPeople + action.missionaries, Bank.SOUTH);
-	}
-	*/
 }
