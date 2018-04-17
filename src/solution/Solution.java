@@ -3,8 +3,6 @@ package solution;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//import org.apache.commons.math3.util.*;
-
 public class Solution {
 	static public int RAFT_SIZE = 2;
 	static public int RAFT_MAX_WEIGHT = 180;
@@ -95,5 +93,11 @@ public class Solution {
 			Bank.SOUTH
 		);
 		System.out.println(test2.isValid());
+	}
+	public static int sum(ArrayList<Integer> data) {
+		int sum = 0;
+		for(int element : data)
+			sum += element;
+		return sum;
 	}
 }

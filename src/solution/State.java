@@ -2,8 +2,10 @@ package solution;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import search.ActionStatePair;
+import org.apache.commons.math3.util.*; // mention this in report
 
 public class State implements search.State {
 	/* ATTRIBUTES */
@@ -57,12 +59,7 @@ public class State implements search.State {
 			public ArrayList<Integer> getNorthPeople() { return northPeople; }
 			public ArrayList<Integer> getSouthPeople() { return southPeople; }
 			public Bank getLocation() { return raftLocation; }
-			public int getRaftWeight() {
-				int sum = 0;
-				for(int d : raft)
-					sum += d;
-				return sum;
-			}
+			public int getRaftWeight() { return Solution.sum(raft); }
 		// accessors
 			public boolean isValid() {
 				for(int element : northPeople)
@@ -71,24 +68,32 @@ public class State implements search.State {
 				for(int element : southPeople)
 					if(element < 0)
 						return false;
-				return true;
+				return raft.size() <= Solution.RAFT_SIZE && getRaftWeight() <= Solution.RAFT_MAX_WEIGHT;
 			}
 			public List<ActionStatePair> successor() {
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				ArrayList<Integer> PeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
-				
-				// The main loops going through all combinations of M. Note that we start from the max value of M down to 0.
-				// This makes us generate actions that prefer moving more M than fewer.
-				for(int m = Math.min(PeopleOnBank.size(), Solution.RAFT_SIZE); m >= 0; m--)
-					// You need at least 1 person on the raft, and not more than raft size. If M is within the acceptable range, create an action.
-					if(0 < m && m <= Solution.RAFT_SIZE && getRaftWeight() < Solution.RAFT_MAX_WEIGHT) {
-						/*
-						Action action = new Action(m, oppositeBank(raftLocation));
-						State newState = applyAction(action);
-						if(newState.isValid())
-							result.add(new ActionStatePair(action, newState));
-						*/
+				for(int i = 0; i < Solution.RAFT_SIZE; i++) {
+					Combinations comb = new Combinations(PeopleOnBank.size(), i);
+					Iterator<int[]> iterator = comb.iterator();
+					while(iterator.hasNext()) {
+						int[] selected = iterator.next();
+						int sum = 0;
+						if(0 < selected.length) {
+							for(int nameIndex : selected)
+								sum += PeopleOnBank.get(nameIndex);
+							if(sum < Solution.RAFT_MAX_WEIGHT) {
+								ArrayList<Integer> selectedItems = new ArrayList<Integer>();
+								for(int nameIndex : selected)
+									selectedItems.add(nameIndex);
+								Action action = new Action(selectedItems, oppositeBank(raftLocation));
+								State newState = applyAction(action);
+								if(newState.isValid())
+									result.add(new ActionStatePair(action, newState));
+							}
+						}
 					}
+				}
 				return result;
 			}
 			public State applyAction(Action action) {
@@ -104,6 +109,6 @@ public class State implements search.State {
 				}
 				return new State(newNorthPeople, newSouthPeople, action.getBank());
 			}
-		// modifiers
+		// other
 			private Bank oppositeBank(Bank current) { return (current == Bank.NORTH ? Bank.SOUTH : Bank.NORTH); }
 }
