@@ -11,18 +11,20 @@ public class State implements search.State {
 		private Bank raftLocation;
 	/* MEMBERS */
 		// constructor
+			@SuppressWarnings("unchecked")
 			public State(ArrayList<Integer> people) {
-				northPeople = people;
+				northPeople = (ArrayList<Integer>)people.clone();
 				southPeople = new ArrayList<Integer>();
 				raftLocation = Bank.NORTH;
 			}
+			@SuppressWarnings("unchecked")
 			public State(ArrayList<Integer> np, ArrayList<Integer> sp, Bank location) {
 				for(int element : np)
 					assert(0 < element);
 				for(int element : sp)
 					assert(0 < element);
-				northPeople = np;
-				southPeople = sp;
+				northPeople = (ArrayList<Integer>)np.clone();
+				southPeople = (ArrayList<Integer>)sp.clone();
 				raftLocation = location;
 			}
 		// operators
@@ -78,18 +80,19 @@ public class State implements search.State {
 				// The main loops going through all combinations of M. Note that we start from the max value of M down to 0.
 				// This makes us generate actions that prefer moving more M than fewer.
 				for(int m = Math.min(PeopleOnBank.size(), Solution.RAFT_SIZE); m >= 0; m--)
-						// You need at least 1 person on the raft, and not more than raft size. If M is within the acceptable range, create an action.
-						if(0 < m && m <= Solution.RAFT_SIZE && getRaftWeight() < Solution.RAFT_MAX_WEIGHT) {
-							/*
-							Action action = new Action(m, oppositeBank(raftLocation));
-							State newState = applyAction(action);
-							if(newState.isValid())
-								result.add(new ActionStatePair(action, newState));
-							*/
-						}
+					// You need at least 1 person on the raft, and not more than raft size. If M is within the acceptable range, create an action.
+					if(0 < m && m <= Solution.RAFT_SIZE && getRaftWeight() < Solution.RAFT_MAX_WEIGHT) {
+						/*
+						Action action = new Action(m, oppositeBank(raftLocation));
+						State newState = applyAction(action);
+						if(newState.isValid())
+							result.add(new ActionStatePair(action, newState));
+						*/
+					}
 				return result;
 			}
 			public State applyAction(Action action) {
+				@SuppressWarnings("unchecked")
 				ArrayList<Integer> newNorthPeople = (ArrayList<Integer>)northPeople.clone(), newSouthPeople = (ArrayList<Integer>)southPeople.clone();
 				if(action.getBank() == Bank.NORTH) {
 					newNorthPeople.addAll(action.getPeople());
@@ -99,7 +102,7 @@ public class State implements search.State {
 					newNorthPeople.removeAll(action.getPeople());
 					newSouthPeople.addAll(action.getPeople());
 				}
-				return new State(newNorthPeople, newSouthPeople, Bank.SOUTH);
+				return new State(newNorthPeople, newSouthPeople, action.getBank());
 			}
 		// modifiers
 			private Bank oppositeBank(Bank current) { return (current == Bank.NORTH ? Bank.SOUTH : Bank.NORTH); }

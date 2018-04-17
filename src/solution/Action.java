@@ -15,8 +15,9 @@ public class Action extends search.Action {
 			 * @param newPeople The number of people to move.
 			 * @param to The destination of the raft.
 			 */
+			@SuppressWarnings("unchecked")
 			public Action(ArrayList<Integer> newPeople, Bank to) {
-				people = newPeople;
+				people = (ArrayList<Integer>)newPeople.clone();
 				toBank = to;
 			}
 		// getters
@@ -26,7 +27,7 @@ public class Action extends search.Action {
 			public String toString() {
 				String result = (this.toBank == Bank.NORTH ? "South->North " : "North->South ");
 				for(int element : people)
-					result += '\t' + element;
+					result += "\n\t" + element;
 				return result;
 			}
 }
