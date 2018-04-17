@@ -25,9 +25,9 @@ public class Action extends search.Action {
 			public Bank getBank() { return toBank; }
 		// operators
 			public String toString() {
-				String result = (this.toBank == Bank.NORTH ? "South->North " : "North->South ");
+				String result = (this.toBank == Bank.NORTH ? "South->North " : "North->South:");
 				for(int element : people)
-					result += "\n\t" + element;
+					result += " " + element;
 				return result;
 			}
 }

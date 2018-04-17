@@ -18,6 +18,7 @@ public class State implements search.State {
 				northPeople = (ArrayList<Integer>)people.clone();
 				southPeople = new ArrayList<Integer>();
 				raftLocation = Bank.NORTH;
+				raft = new ArrayList<Integer>();
 			}
 			@SuppressWarnings("unchecked")
 			public State(ArrayList<Integer> np, ArrayList<Integer> sp, Bank location) {
@@ -28,15 +29,16 @@ public class State implements search.State {
 				northPeople = (ArrayList<Integer>)np.clone();
 				southPeople = (ArrayList<Integer>)sp.clone();
 				raftLocation = location;
+				raft = new ArrayList<Integer>();
 			}
 		// operators
 			public String toString() {
-				String result = "North: " + northPeople;
+				String result = "\tNorth: " + northPeople;
 				if(raftLocation == Bank.NORTH)
 					result += " Raft";
-				result += "\tSouth: " + southPeople;
+				result += "\n\tSouth: " + southPeople;
 				if(raftLocation == Bank.SOUTH)
-					result += " Raft";
+					result += " Raft\n";
 				return result;
 			}
 			public boolean equals(State state) {
@@ -73,20 +75,30 @@ public class State implements search.State {
 			public List<ActionStatePair> successor() {
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				ArrayList<Integer> PeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
-				for(int i = 0; i < Solution.RAFT_SIZE; i++) {
+				for(int i = 1; i < Solution.RAFT_SIZE; i++) {
+					//System.out.println("people on the boat " + i);
 					Combinations comb = new Combinations(PeopleOnBank.size(), i);
 					Iterator<int[]> iterator = comb.iterator();
 					while(iterator.hasNext()) {
 						int[] selected = iterator.next();
-						int sum = 0;
+						/*
+						System.out.print("  people selected: ");
+						for(int element : selected)
+							System.out.print(PeopleOnBank.get(element) + " ");
+						System.out.println();
+						*/
 						if(0 < selected.length) {
+							int sum = 0;
 							for(int nameIndex : selected)
 								sum += PeopleOnBank.get(nameIndex);
-							if(sum < Solution.RAFT_MAX_WEIGHT) {
+							//System.out.println("    sum: " + sum);
+							if(sum <= Solution.RAFT_MAX_WEIGHT) {
+								//System.out.println("    candidate");
 								ArrayList<Integer> selectedItems = new ArrayList<Integer>();
 								for(int nameIndex : selected)
-									selectedItems.add(nameIndex);
+									selectedItems.add(PeopleOnBank.get(nameIndex));
 								Action action = new Action(selectedItems, oppositeBank(raftLocation));
+								//System.out.println("      " + action.toString());
 								State newState = applyAction(action);
 								if(newState.isValid())
 									result.add(new ActionStatePair(action, newState));

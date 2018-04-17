@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Solution {
-	static public int RAFT_SIZE = 2;
-	static public int RAFT_MAX_WEIGHT = 180;
+	static public int RAFT_SIZE = 3;
+	static public int RAFT_MAX_WEIGHT = 150;
 	static public int NUM_PEOPLE = 4;
+
 	@SuppressWarnings("serial")
 	static public ArrayList<Integer> PEOPLE = new ArrayList<Integer>() {{
 		add(100);
@@ -18,7 +19,8 @@ public class Solution {
 	public static void main(String[] args) {
 		//promptValues();
 		//testStateClass();
-		testActionClass();
+		//testActionClass();
+		testSuccessor();
 	}
 
 	private static void promptValues() {
@@ -40,6 +42,19 @@ public class Solution {
 	}
 
 	@SuppressWarnings("serial")
+	private static void testSuccessor() {
+		State test = new State(
+			new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+				add(60);
+				add(40);
+			}}
+		);
+		System.out.println(test.successor().toString());
+	}
+
+	@SuppressWarnings("serial")
 	private static void testActionClass() {
 		Action test = new Action(
 			new ArrayList<Integer>() {{
@@ -57,7 +72,7 @@ public class Solution {
 		System.out.println(test2.toString());
 		System.out.println(test3.toString());
 	}
-	
+
 	@SuppressWarnings("serial")
 	private static void testStateClass() {
 		State test = new State(
@@ -94,6 +109,7 @@ public class Solution {
 		);
 		System.out.println(test2.isValid());
 	}
+
 	public static int sum(ArrayList<Integer> data) {
 		int sum = 0;
 		for(int element : data)
