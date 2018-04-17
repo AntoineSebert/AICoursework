@@ -18,9 +18,7 @@ public class Solution {
 
 	public static void main(String[] args) {
 		//promptValues();
-		//testStateClass();
-		//testActionClass();
-		testSuccessor();
+		runTests();
 	}
 
 	private static void promptValues() {
@@ -39,6 +37,13 @@ public class Solution {
 			PEOPLE.add(scan.nextInt());
 
 		scan.close();
+	}
+
+	private static void runTests() {
+		//testStateClass();
+		//testActionClass();
+		//testSuccessor();
+		testSearch();
 	}
 
 	@SuppressWarnings("serial")
@@ -108,6 +113,30 @@ public class Solution {
 			Bank.SOUTH
 		);
 		System.out.println(test2.isValid());
+	}
+
+	private static void testSearch() {
+		State start = new State(
+			new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+				add(60);
+				add(40);
+			}}
+		);
+		State goal = new State(
+				new ArrayList<Integer>() {{ }},
+				new ArrayList<Integer>() {{
+					add(100);
+					add(80);
+					add(60);
+					add(40);
+				}},
+				Bank.SOUTH
+			);
+		SearchProblem test = new SearchProblem(start, goal);
+		test.search();
+		//System.out.println(test.);
 	}
 
 	public static int sum(ArrayList<Integer> data) {
