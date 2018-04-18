@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="solution.State" project="ArtificialIntelligenceCoursework" 
     file="/ArtificialIntelligenceCoursework/src/solution/State.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="646" y="172"/>    
+    <position height="-1" width="-1" x="647" y="205"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="solution.Solution" project="ArtificialIntelligenceCoursework" 
     file="/ArtificialIntelligenceCoursework/src/solution/Solution.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="784" y="688"/>    
+    <position height="-1" width="-1" x="703" y="652"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="solution.SearchProblem" project="ArtificialIntelligenceCoursework" 
     file="/ArtificialIntelligenceCoursework/src/solution/SearchProblem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="89" y="477"/>    
+    <position height="-1" width="-1" x="142" y="478"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </enumeration>  
   <class id="5" language="java" name="solution.Action" project="ArtificialIntelligenceCoursework" 
     file="/ArtificialIntelligenceCoursework/src/solution/Action.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="591" y="469"/>    
+    <position height="-1" width="-1" x="553" y="448"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
