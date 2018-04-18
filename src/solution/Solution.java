@@ -21,6 +21,16 @@ public class Solution {
 	/* main */
 		public static void main(String[] args) {
 			//runTests();
+			// change these values to customize problem statement
+			initializeMainValues(3, 180, new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+				add(60);
+				add(40);
+				add(70);
+				add(50);
+				add(90);
+			}}, Bank.SOUTH);
 			performSearch();
 		}
 	/* tests */
@@ -98,16 +108,6 @@ public class Solution {
 	/* search */
 		@SuppressWarnings("serial")
 		private static Path performSearch() {
-			// change these values to customize problem statement
-			initializeMainValues(3, 180, new ArrayList<Integer>() {{
-				add(100);
-				add(80);
-				add(60);
-				add(40);
-				add(70);
-				add(50);
-				add(90);
-			}}, Bank.SOUTH);
 			return new SearchProblem(new State(PEOPLE), new State(new ArrayList<Integer>() {{ }}, PEOPLE, DESTINATION)).search();
 		}
 	/* utility */
