@@ -15,7 +15,6 @@ public class Action extends search.Action {
 			 * @param newPeople The number of people to move.
 			 * @param to The destination of the raft.
 			 */
-			@SuppressWarnings("unchecked")
 			public Action(ArrayList<Integer> newPeople, Bank to) {
 				people = (ArrayList<Integer>)newPeople.clone();
 				toBank = to;

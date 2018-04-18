@@ -9,7 +9,6 @@ public class Solution {
 	/* problem's default values */
 		static public int RAFT_SIZE = 2;
 		static public int RAFT_MAX_WEIGHT = 180;
-		@SuppressWarnings("serial")
 		static public ArrayList<Integer> PEOPLE = new ArrayList<Integer>() {{
 			add(100);
 			add(90);
@@ -106,7 +105,6 @@ public class Solution {
 			System.out.println(test2.isValid());
 		}
 	/* search */
-		@SuppressWarnings("serial")
 		private static Path performSearch() {
 			return new SearchProblem(new State(PEOPLE), new State(new ArrayList<Integer>() {{ }}, PEOPLE, DESTINATION)).search();
 		}

@@ -13,13 +13,11 @@ public class State implements search.State {
 		private Bank raftLocation;
 	/* MEMBERS */
 		// constructor
-			@SuppressWarnings("unchecked")
 			public State(ArrayList<Integer> people) {
 				northPeople = (ArrayList<Integer>)people.clone();
 				southPeople = new ArrayList<Integer>();
-				raftLocation = Bank.NORTH;
+				raftLocation = oppositeBank(Solution.DESTINATION);
 			}
-			@SuppressWarnings("unchecked")
 			public State(ArrayList<Integer> np, ArrayList<Integer> sp, Bank location) {
 				for(int element : np)
 					assert(0 < element);
@@ -112,7 +110,6 @@ public class State implements search.State {
 				return result;
 			}
 			public State applyAction(Action action) {
-				@SuppressWarnings("unchecked")
 				ArrayList<Integer> newNorthPeople = (ArrayList<Integer>)northPeople.clone(), newSouthPeople = (ArrayList<Integer>)southPeople.clone();
 				if(action.getBank() == Bank.NORTH) {
 					newNorthPeople.addAll(action.getPeople());
