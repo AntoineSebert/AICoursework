@@ -54,7 +54,7 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 		Node rootNode = new Node(this.startState, null, null);	//create root node
 		fringe.add(rootNode);											//add root node into fringe
 		visitedNodes.put(rootNode.state, rootNode);						//seen root node and state
-		this.nodeVisited++;												//increment node count
+		nodeVisited++;												//increment node count
 		if (nodeVisited % 1000 == 0)									//print message every 1000 nodes
 			System.out.println("No. of nodes explored: " + nodeVisited);
 		
@@ -66,12 +66,11 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 			if (this.isGoal(node.state))		//if goal is found
 				return constructPath(node);		//construct path and return path
 		
-			Object[] childrenNodes = node.state.successor().toArray();
-			for (int i = 0; i < childrenNodes.length; i++) {
-				this.nodeVisited++;										//increment node count
+			for(ActionStatePair element : node.state.successor()) {
+				nodeVisited++;										//increment node count
 				if (nodeVisited % 1000 == 0)							//print message every 1000 nodes
 					System.out.println("No. of nodes explored: " + nodeVisited);
-				ActionStatePair child = (ActionStatePair)childrenNodes[i];
+				ActionStatePair child = element;
 				Action action = child.action;
 				State nextState = child.state;
 				Node lastSeenNode = (Node)visitedNodes.get(nextState);
@@ -81,15 +80,13 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 					addChild(fringe, childNode);
 					visitedNodes.put(nextState, childNode);
 				}
-				else {
-					if (lastSeenNode.getCost() > action.cost + node.getCost()) {	//going this new path is cheaper
-						lastSeenNode.parent = node;						//to reach this next state, you should go through the current node
-						lastSeenNode.action = action;					//update the action too
-					}
+				else if(lastSeenNode.getCost() > action.cost + node.getCost()) {	//going this new path is cheaper
+					lastSeenNode.parent = node;						//to reach this next state, you should go through the current node
+					lastSeenNode.action = action;					//update the action too
 				}
-			} //end for
-		} //end while
-	} //end method
+			}
+		}
+	}
 		
 	/**
 	 * Adding a child node into the fringe list.
@@ -110,7 +107,7 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 			}
 		}
 		fringe.add(childNode);		//if you hit end of list, add child to the end
-	} //end method
+	}
 	
 	/**
 	 * The evaluation function is to be supplied.
@@ -124,4 +121,4 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 	 * @return The score of the node. The lower the score is, the better the node.
 	 */
 	public abstract double evaluation(Node node);
-} //end class
+}

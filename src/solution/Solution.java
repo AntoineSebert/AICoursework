@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Solution {
-	static public int RAFT_SIZE = 3;
-	static public int RAFT_MAX_WEIGHT = 150;
+	static public int RAFT_SIZE = 2;
+	static public int RAFT_MAX_WEIGHT = 180;
 	static public int NUM_PEOPLE = 4;
 
 	@SuppressWarnings("serial")
@@ -115,28 +115,37 @@ public class Solution {
 		System.out.println(test2.isValid());
 	}
 
+	@SuppressWarnings("serial")
 	private static void testSearch() {
+		RAFT_SIZE = 3;
+		RAFT_MAX_WEIGHT = 180;
+		NUM_PEOPLE = 7;
 		State start = new State(
 			new ArrayList<Integer>() {{
 				add(100);
 				add(80);
 				add(60);
 				add(40);
+				add(70);
+				add(50);
+				add(90);
 			}}
 		);
 		State goal = new State(
-				new ArrayList<Integer>() {{ }},
-				new ArrayList<Integer>() {{
-					add(100);
-					add(80);
-					add(60);
-					add(40);
-				}},
-				Bank.SOUTH
-			);
+			new ArrayList<Integer>() {{ }},
+			new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+				add(60);
+				add(40);
+				add(70);
+				add(50);
+				add(90);
+			}},
+			Bank.SOUTH
+		);
 		SearchProblem test = new SearchProblem(start, goal);
 		test.search();
-		//System.out.println(test.);
 	}
 
 	public static int sum(ArrayList<Integer> data) {

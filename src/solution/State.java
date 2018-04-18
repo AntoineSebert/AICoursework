@@ -70,32 +70,37 @@ public class State implements search.State {
 				return true;
 			}
 			public List<ActionStatePair> successor() {
+				System.out.println("==========================================");
+				String test = "\tNorth: " + northPeople;
+				if(raftLocation == Bank.NORTH)
+					test += " Raft";
+				test += "\n\tSouth: " + southPeople;
+				if(raftLocation == Bank.SOUTH)
+					test += " Raft";
+				System.out.println(test);
+				System.out.println("------------------------------------------");
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				ArrayList<Integer> PeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
 				for(int i = 1; i < Solution.RAFT_SIZE; i++) {
-					//System.out.println("people on the boat " + i);
-					Combinations comb = new Combinations(PeopleOnBank.size(), i);
+					Combinations comb = new Combinations(PeopleOnBank.size(), Math.min(i, PeopleOnBank.size()));
 					Iterator<int[]> iterator = comb.iterator();
 					while(iterator.hasNext()) {
 						int[] selected = iterator.next();
-						/*
 						System.out.print("  people selected: ");
 						for(int element : selected)
 							System.out.print(PeopleOnBank.get(element) + " ");
-						System.out.println();
-						*/
 						if(0 < selected.length) {
 							int sum = 0;
 							for(int nameIndex : selected)
 								sum += PeopleOnBank.get(nameIndex);
-							//System.out.println("    sum: " + sum);
+							System.out.println("\t[sum: " + sum + "]");
 							if(sum <= Solution.RAFT_MAX_WEIGHT) {
-								//System.out.println("    candidate");
+								System.out.println("    candidate");
 								ArrayList<Integer> selectedItems = new ArrayList<Integer>();
 								for(int nameIndex : selected)
 									selectedItems.add(PeopleOnBank.get(nameIndex));
 								Action action = new Action(selectedItems, oppositeBank(raftLocation));
-								//System.out.println("      " + action.toString());
+								System.out.println("      " + action.toString());
 								State newState = applyAction(action);
 								if(newState.isValid())
 									result.add(new ActionStatePair(action, newState));
@@ -119,9 +124,7 @@ public class State implements search.State {
 				return new State(newNorthPeople, newSouthPeople, action.getBank());
 			}
 			public int hashCode() {
-				int hashcode = (raftLocation == Bank.NORTH ? 0 : 1);
-				hashcode += Solution.sum(northPeople) + (Solution.sum(southPeople) * 1000);
-				return hashcode;
+				return (raftLocation == Bank.NORTH ? 0 : 1) + Solution.sum(northPeople) + (Solution.sum(southPeople) * 1000);
 			}
 		// other
 			private Bank oppositeBank(Bank current) { return (current == Bank.NORTH ? Bank.SOUTH : Bank.NORTH); }

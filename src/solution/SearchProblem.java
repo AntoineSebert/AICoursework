@@ -21,9 +21,12 @@ public class SearchProblem extends BestFirstSearchProblem {
 		 * @return The remaining distance/cost of the current state to a goal.
 		*/
 		public double heuristic(search.State state) {
-			int maxScore = Solution.sum(goal.getSouthPeople()), currentScore = Solution.sum(((State)state).getSouthPeople());
-			return (double)currentScore / (double)maxScore;
+			return ((double)Solution.sum(goal.getSouthPeople()) / (double)Solution.sum(((State)state).getSouthPeople())) * 100;
 		}
 		@Override
-		public boolean isGoal(search.State state) { return ((State)state).equals(goal); }
+		public boolean isGoal(search.State state) {
+			if(((State)state).equals(goal))
+				System.out.println("GOAL REACHED");
+			return ((State)state).equals(goal);
+		}
 }
