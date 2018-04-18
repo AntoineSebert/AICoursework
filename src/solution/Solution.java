@@ -3,6 +3,8 @@ package solution;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import search.Path;
+
 public class Solution {
 	/* problem's default values */
 		static public int RAFT_SIZE = 2;
@@ -15,6 +17,7 @@ public class Solution {
 			add(30);
 		}};
 		static public int NUM_PEOPLE = PEOPLE.size();
+		static public Bank DESTINATION = Bank.NORTH;
 	/* main */
 		public static void main(String[] args) {
 			//runTests();
@@ -94,42 +97,31 @@ public class Solution {
 		}
 	/* search */
 		@SuppressWarnings("serial")
-		private static void performSearch() {
-			RAFT_SIZE = 3;
-			RAFT_MAX_WEIGHT = 180;
-			NUM_PEOPLE = 7;
-			State start = new State(
-				new ArrayList<Integer>() {{
-					add(100);
-					add(80);
-					add(60);
-					add(40);
-					add(70);
-					add(50);
-					add(90);
-				}}
-			);
-			State goal = new State(
-				new ArrayList<Integer>() {{ }},
-				new ArrayList<Integer>() {{
-					add(100);
-					add(80);
-					add(60);
-					add(40);
-					add(70);
-					add(50);
-					add(90);
-				}},
-				Bank.SOUTH
-			);
-			SearchProblem test = new SearchProblem(start, goal);
-			test.search();
+		private static Path performSearch() {
+			// change these values to customize problem statement
+			initializeMainValues(3, 180, new ArrayList<Integer>() {{
+				add(100);
+				add(80);
+				add(60);
+				add(40);
+				add(70);
+				add(50);
+				add(90);
+			}}, Bank.SOUTH);
+			return new SearchProblem(new State(PEOPLE), new State(new ArrayList<Integer>() {{ }}, PEOPLE, DESTINATION)).search();
 		}
 	/* utility */
-	public static int sum(ArrayList<Integer> data) {
-		int sum = 0;
-		for(int element : data)
-			sum += element;
-		return sum;
-	}
+		public static int sum(ArrayList<Integer> data) {
+			int sum = 0;
+			for(int element : data)
+				sum += element;
+			return sum;
+		}
+		public static void initializeMainValues(int raftSize, int maxWeight, ArrayList<Integer> people, Bank destination) {
+			RAFT_SIZE = raftSize;
+			RAFT_MAX_WEIGHT = maxWeight;
+			PEOPLE = people;
+			NUM_PEOPLE = people.size();
+			DESTINATION = destination;
+		}
 }
