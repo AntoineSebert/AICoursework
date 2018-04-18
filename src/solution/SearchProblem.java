@@ -21,7 +21,8 @@ public class SearchProblem extends BestFirstSearchProblem {
 		 * @return The remaining distance/cost of the current state to a goal.
 		*/
 		public double heuristic(search.State state) {
-			return ((double)Solution.sum(goal.getSouthPeople()) / (double)Solution.sum(((State)state).getSouthPeople())) * 100;
+			double sumGoal = Solution.sum(goal.getPeopleFrom(goal.getLocation())), sumState = Solution.sum(((State)state).getPeopleFrom(goal.getLocation()));
+			return (sumGoal / sumState) * 100;
 		}
 		@Override
 		public boolean isGoal(search.State state) {

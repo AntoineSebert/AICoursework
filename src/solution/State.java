@@ -58,6 +58,7 @@ public class State implements search.State {
 		// getters
 			public ArrayList<Integer> getNorthPeople() { return northPeople; }
 			public ArrayList<Integer> getSouthPeople() { return southPeople; }
+			public ArrayList<Integer> getPeopleFrom(Bank bank) { return (bank == Bank.NORTH ? northPeople : southPeople); }
 			public Bank getLocation() { return raftLocation; }
 		// accessors
 			public boolean isValid() {
