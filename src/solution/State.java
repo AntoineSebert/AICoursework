@@ -38,7 +38,7 @@ public class State implements search.State {
 				return result;
 			}
 			public boolean equals(State state) {
-				if(northPeople.size() != state.getNorthPeople().size() || southPeople.size() != state.getSouthPeople().size())
+				if(northPeople.size() != state.getNorthPeople().size() || southPeople.size() != state.getSouthPeople().size() || raftLocation != state.getLocation())
 					return false;
 				Collections.sort(northPeople);
 				Collections.sort(state.getNorthPeople());
@@ -88,22 +88,20 @@ public class State implements search.State {
 						System.out.print("  people selected: ");
 						for(int element : selected)
 							System.out.print(PeopleOnBank.get(element) + " ");
-						if(0 < selected.length) {
-							int sum = 0;
+						int sum = 0;
+						for(int nameIndex : selected)
+							sum += PeopleOnBank.get(nameIndex);
+						System.out.println("\t[sum: " + sum + "]");
+						if(0 < selected.length && sum <= Solution.RAFT_MAX_WEIGHT) {
+							System.out.println("    candidate");
+							ArrayList<Integer> selectedItems = new ArrayList<Integer>();
 							for(int nameIndex : selected)
-								sum += PeopleOnBank.get(nameIndex);
-							System.out.println("\t[sum: " + sum + "]");
-							if(sum <= Solution.RAFT_MAX_WEIGHT) {
-								System.out.println("    candidate");
-								ArrayList<Integer> selectedItems = new ArrayList<Integer>();
-								for(int nameIndex : selected)
-									selectedItems.add(PeopleOnBank.get(nameIndex));
-								Action action = new Action(selectedItems, oppositeBank(raftLocation));
-								System.out.println("      " + action.toString());
-								State newState = applyAction(action);
-								if(newState.isValid())
-									result.add(new ActionStatePair(action, newState));
-							}
+								selectedItems.add(PeopleOnBank.get(nameIndex));
+							Action action = new Action(selectedItems, oppositeBank(raftLocation));
+							System.out.println("      " + action.toString());
+							State newState = applyAction(action);
+							if(newState.isValid())
+								result.add(new ActionStatePair(action, newState));
 						}
 					}
 				}

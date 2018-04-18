@@ -10,7 +10,7 @@ public class Action extends search.Action {
 		public Bank toBank;
 	/* MEMBERS */
 		// constructor
-			/**
+			/*
 			 * Create an Action object.
 			 * @param newPeople The number of people to move.
 			 * @param to The destination of the raft.
