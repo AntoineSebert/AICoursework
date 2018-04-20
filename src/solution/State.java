@@ -87,6 +87,9 @@ public class State implements search.State {
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				ArrayList<Integer> PeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
 				for(int i = 1; i <= Solution.RAFT_SIZE; i++) {
+					// prevent duplicates
+					if(PeopleOnBank.size() < i)
+						continue;
 					Combinations comb = new Combinations(PeopleOnBank.size(), Math.min(i, PeopleOnBank.size()));
 					Iterator<int[]> iterator = comb.iterator();
 					while(iterator.hasNext()) {

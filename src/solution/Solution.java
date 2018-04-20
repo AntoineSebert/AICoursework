@@ -25,7 +25,7 @@ public class Solution {
 			ANSI_WHITE = "\u001B[37m";
 	/* main */
 		public static void main(String[] args) {
-			//runTests();
+			runTests();
 			// change these values to customize problem statement
 			initializeMainValues(3, 180, createArrayList(100, 80, 60, 40, 70, 50, 90), Bank.SOUTH);
 			performSearch();

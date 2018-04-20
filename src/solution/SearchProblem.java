@@ -4,13 +4,9 @@ import search.Node;
 import search.informed.BestFirstSearchProblem;
 
 public class SearchProblem extends BestFirstSearchProblem {
-	/* ATTRIBUTES */
-		//State start, goal;
 	/* MEMBERS */
 		public SearchProblem(State newStart, State newGoal) {
 			super(newStart, newGoal);
-			//start = newStart;
-			//goal = newGoal;
 		}
 		@Override
 		public double evaluation(Node node) {
