@@ -14,8 +14,14 @@ public class State implements search.State {
 	/* MEMBERS */
 		// constructor
 			public State(ArrayList<Integer> people) {
-				northPeople = (ArrayList<Integer>)people.clone();
-				southPeople = new ArrayList<Integer>();
+				if(Solution.DESTINATION == Bank.NORTH) {
+					northPeople = (ArrayList<Integer>)people.clone();
+					southPeople = new ArrayList<Integer>();
+				}
+				else {
+					northPeople = new ArrayList<Integer>();
+					southPeople = (ArrayList<Integer>)people.clone();
+				}
 				raftLocation = oppositeBank(Solution.DESTINATION);
 			}
 			public State(ArrayList<Integer> np, ArrayList<Integer> sp, Bank location) {

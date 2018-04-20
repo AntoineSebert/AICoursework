@@ -3,6 +3,7 @@ package solution;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import search.ActionStatePair;
 import search.Path;
 
 public class Solution {
@@ -13,21 +14,21 @@ public class Solution {
 		static public int NUM_PEOPLE = PEOPLE.size();
 		static public Bank DESTINATION = Bank.NORTH;
 	/* sexy colors for the console */
-		public static final String ANSI_RESET = "\u001B[0m";
-		public static final String ANSI_BLACK = "\u001B[30m";
-		public static final String ANSI_RED = "\u001B[31m";
-		public static final String ANSI_GREEN = "\u001B[32m";
-		public static final String ANSI_YELLOW = "\u001B[33m";
-		public static final String ANSI_BLUE = "\u001B[34m";
-		public static final String ANSI_PURPLE = "\u001B[35m";
-		public static final String ANSI_CYAN = "\u001B[36m";
-		public static final String ANSI_WHITE = "\u001B[37m";
+		public static final String ANSI_RESET = "\u001B[0m",
+			ANSI_BLACK = "\u001B[30m",
+			ANSI_RED = "\u001B[31m",
+			ANSI_GREEN = "\u001B[32m",
+			ANSI_YELLOW = "\u001B[33m",
+			ANSI_BLUE = "\u001B[34m",
+			ANSI_PURPLE = "\u001B[35m",
+			ANSI_CYAN = "\u001B[36m",
+			ANSI_WHITE = "\u001B[37m";
 	/* main */
 		public static void main(String[] args) {
 			runTests();
 			// change these values to customize problem statement
 			initializeMainValues(3, 180, createArrayList(100, 80, 60, 40, 70, 50, 90), Bank.SOUTH);
-			performSearch();
+			//performSearch();
 		}
 	/* tests */
 		private static void runTests() {
@@ -36,8 +37,13 @@ public class Solution {
 			testSuccessor();
 		}
 		private static void testSuccessor() {
+			System.out.println("= Test if the successor() member works:");
 			State test = new State(createArrayList(100, 80, 60, 40));
-			System.out.println(test.successor().toString());
+			System.out.println(test.toString());
+			System.out.println("=");
+			for(ActionStatePair element : test.successor())
+				System.out.println(element.state.toString());
+			System.out.println("=");
 		}
 		private static void testActionClass() {
 			System.out.println("= Test if an action can be applied to a state:");

@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class Action extends search.Action {
 	/* ATTRIBUTES */
-		// The number of persons moving in this action
 		public ArrayList<Integer> people;
-		// We are moving the raft to this bank
 		public Bank toBank;
 	/* MEMBERS */
 		// constructor
