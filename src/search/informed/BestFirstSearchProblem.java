@@ -33,8 +33,8 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 	 */
 	public BestFirstSearchProblem(State start, State goal) {
 		super(start);
-		this.goalState = goal;
-	} //end method
+		goalState = goal;
+	}
 	
 	/**
 	 * This is a specialized version of search tailored for informed search.
@@ -51,31 +51,31 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 		Map<State, Node> visitedNodes = new HashMap<State, Node>();
 		List<Node> fringe = new LinkedList<Node>();					//the list of fringe nodes
 		
-		Node rootNode = new Node(this.startState, null, null);	//create root node
-		fringe.add(rootNode);											//add root node into fringe
-		visitedNodes.put(rootNode.state, rootNode);						//seen root node and state
+		Node rootNode = new Node(startState, null, null);			//create root node
+		fringe.add(rootNode);										//add root node into fringe
+		visitedNodes.put(rootNode.state, rootNode);					//seen root node and state
 		nodeVisited++;												//increment node count
-		if (nodeVisited % 1000 == 0)									//print message every 1000 nodes
+		if(nodeVisited % 1000 == 0)									//print message every 1000 nodes
 			System.out.println("No. of nodes explored: " + nodeVisited);
 		
-		while (true) {
-			if (fringe.isEmpty())		//no more node to expand
+		while(true) {
+			if(fringe.isEmpty())		//no more node to expand
 				return null;			//no solution
 			
-			Node node = fringe.remove(0);		//remove and take 1st node
-			if (this.isGoal(node.state))		//if goal is found
+			Node node = fringe.remove(0);	//remove and take 1st node
+			if(isGoal(node.state))			//if goal is found
 				return constructPath(node);		//construct path and return path
 		
 			for(ActionStatePair element : node.state.successor()) {
 				nodeVisited++;										//increment node count
-				if (nodeVisited % 1000 == 0)							//print message every 1000 nodes
+				if(nodeVisited % 1000 == 0)							//print message every 1000 nodes
 					System.out.println("No. of nodes explored: " + nodeVisited);
 				ActionStatePair child = element;
 				Action action = child.action;
 				State nextState = child.state;
-				Node lastSeenNode = (Node)visitedNodes.get(nextState);
+				Node lastSeenNode = visitedNodes.get(nextState);
 				
-				if (lastSeenNode == null) {		//have not seen this state before
+				if(lastSeenNode == null) {		//have not seen this state before
 					Node childNode = new Node(nextState, node, action);
 					addChild(fringe, childNode);
 					visitedNodes.put(nextState, childNode);
@@ -100,8 +100,8 @@ public abstract class BestFirstSearchProblem extends search.SearchProblem {
 	 */
 	@Override
 	protected void addChild(List<Node> fringe, Node childNode) {
-		for (int i = 0; i < fringe.size(); i++) {	//scan fringe from beginning to end
-			if (evaluation(childNode) < evaluation((Node)fringe.get(i))) {	//find position where node is just bigger than child in evaluation function value
+		for(int i = 0; i < fringe.size(); i++) {	//scan fringe from beginning to end
+			if(evaluation(childNode) < evaluation(fringe.get(i))) {	//find position where node is just bigger than child in evaluation function value
 					fringe.add(i, childNode);	//add child just before that node
 					return;						//exit, no need to continue
 			}
