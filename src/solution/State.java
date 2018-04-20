@@ -15,12 +15,12 @@ public class State implements search.State {
 		// constructor
 			public State(ArrayList<Integer> people) {
 				if(Solution.DESTINATION == Bank.NORTH) {
-					northPeople = (ArrayList<Integer>)people.clone();
-					southPeople = new ArrayList<Integer>();
-				}
-				else {
 					northPeople = new ArrayList<Integer>();
 					southPeople = (ArrayList<Integer>)people.clone();
+				}
+				else {
+					northPeople = (ArrayList<Integer>)people.clone();
+					southPeople = new ArrayList<Integer>();
 				}
 				raftLocation = oppositeBank(Solution.DESTINATION);
 			}
@@ -86,7 +86,7 @@ public class State implements search.State {
 				System.out.println("------------------------------------------");
 				List<ActionStatePair> result = new ArrayList<ActionStatePair>();
 				ArrayList<Integer> PeopleOnBank = (raftLocation == Bank.NORTH ? northPeople : southPeople);
-				for(int i = 1; i < Solution.RAFT_SIZE; i++) {
+				for(int i = 1; i <= Solution.RAFT_SIZE; i++) {
 					Combinations comb = new Combinations(PeopleOnBank.size(), Math.min(i, PeopleOnBank.size()));
 					Iterator<int[]> iterator = comb.iterator();
 					while(iterator.hasNext()) {

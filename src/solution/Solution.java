@@ -39,11 +39,7 @@ public class Solution {
 		private static void testSuccessor() {
 			System.out.println("= Test if the successor() member works:");
 			State test = new State(createArrayList(100, 80, 60, 40));
-			System.out.println(test.toString());
-			System.out.println("=");
-			for(ActionStatePair element : test.successor())
-				System.out.println(element.state.toString());
-			System.out.println("=");
+			test.successor();
 		}
 		private static void testActionClass() {
 			System.out.println("= Test if an action can be applied to a state:");
